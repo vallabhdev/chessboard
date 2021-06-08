@@ -10,7 +10,7 @@ public class Simulator {
     private final PieceFactory pieceFactory;
 
     public Simulator() {
-        this.board = new Board();
+        this.board = Board.getInstance();
         this.pieceFactory = new PieceFactory();
     }
 

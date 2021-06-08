@@ -18,7 +18,7 @@ public class KingTest {
     @Before
     public void setUp() {
         king = new King();
-        board = new Board();
+        board = Board.getInstance();
     }
 
     @Test

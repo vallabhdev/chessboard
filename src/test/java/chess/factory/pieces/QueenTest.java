@@ -19,7 +19,7 @@ public class QueenTest {
     @Before
     public void setUp() {
         queen = new Queen();
-        board = new Board();
+        board = Board.getInstance();
     }
 
     @Test

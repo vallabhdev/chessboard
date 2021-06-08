@@ -10,7 +10,7 @@ public class BoardTest {
 
     @Before
     public void setUp() {
-        board = new Board();
+        board = Board.getInstance();
     }
 
     @Test
