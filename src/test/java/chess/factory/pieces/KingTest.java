@@ -28,17 +28,23 @@ public class KingTest {
 
     @Test
     public void checkAllTypesOfMove() {
-        Set<String> suggestedMoves = king.suggestions("B3", board);
         List<String> expectedMoves = Arrays.stream("A2,A3,A4,B2,B4,C2,C3,C4".split(","))
                 .collect(Collectors.toList());
+
+        Set<String> suggestedMoves = king.suggestions("B3", board);
+
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
+        Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
 
     @Test
     public void checkCornerMoves() {
-        Set<String> suggestedMoves = king.suggestions("A1", board);
         List<String> expectedMoves = Arrays.stream("A2,B2,B1".split(","))
                 .collect(Collectors.toList());
+
+        Set<String> suggestedMoves = king.suggestions("A1", board);
+
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
+        Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
 }

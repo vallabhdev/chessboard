@@ -39,9 +39,11 @@ public class HorseTest {
 
     @Test
     public void checkCornerMoves() {
-        Set<String> suggestedMoves = horse.suggestions("A2", board);
         List<String> expectedMoves = Arrays.stream("C1,C3,B4".split(","))
                 .collect(Collectors.toList());
+
+        Set<String> suggestedMoves = horse.suggestions("A2", board);
+
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
     }
 }

@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class QueenTest {
-
     private Queen queen;
     private Board board;
 
@@ -34,7 +33,9 @@ public class QueenTest {
                 "A2,B3,C4,E6,F7,G8,A8,B7,C6,E4,F3,G2,H1"; // diagonal to D5 [(A2-G8),(H1-A8)]
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(","))
                 .collect(Collectors.toList());
+
         Set<String> suggestedMoves = queen.suggestions("D5", board);
+
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
@@ -46,7 +47,9 @@ public class QueenTest {
                 "G7,F6,E5,D4,C3,B2,A1";  // diagonal to H8
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(","))
                 .collect(Collectors.toList());
+
         Set<String> suggestedMoves = queen.suggestions("H8", board);
+
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
