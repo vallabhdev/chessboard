@@ -40,4 +40,16 @@ public class SimulatorTest {
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
+
+    @Test
+    public void whenHorseIsAtE3() {
+        String expectedSpots = "D1,F1,D5,F5," + //move horizontally first then Vertically picked spots
+                "C2,C4,G2,G4"; //move vertically first then horizontally picked spots
+        List<String> expectedMoves = Arrays.stream(expectedSpots.split(",")).collect(Collectors.toList());
+
+        Set<String> suggestedMoves = simulator.moveSuggestions("HORSE E3");
+
+        Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
+        Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
+    }
 }
