@@ -6,6 +6,7 @@ import chess.factory.Piece;
 
 import java.util.*;
 
+import static chess.Board.addIfValid;
 import static chess.Moves.*;
 
 public class Queen extends Piece {
@@ -47,7 +48,7 @@ public class Queen extends Piece {
         String[][] spots = board.getSpots();
         int currentCol = board.findYIndexOf(spot);
         List<String> verticalSpots = new ArrayList<>();
-        // queen can walk any steps vertically from current row's spot, so adding all the current row spots.
+        // queen can walk any steps vertically from current row's spot, so adding all the current column spots.
         for (int x = 0; x < 8; x++) {
             verticalSpots.add(spots[x][currentCol]);
         }
@@ -60,23 +61,12 @@ public class Queen extends Piece {
         for (int i = 1; i < 8; i++) {
             final int x = board.findXIndexOf(spot);
             final int y = board.findYIndexOf(spot);
-            if (isValidIndex(x + i) && isValidIndex(y + i)) {
-                diagonalSpots.add(spots[x + i][y + i]);
-            }
-            if (isValidIndex(x - i) && isValidIndex(y + i)) {
-                diagonalSpots.add(spots[x - i][y + i]);
-            }
-            if (isValidIndex(x - i) && isValidIndex(y - i)) {
-                diagonalSpots.add(spots[x - i][y - i]);
-            }
-            if (isValidIndex(x + i) && isValidIndex(y - i)) {
-                diagonalSpots.add(spots[x + i][y - i]);
-            }
+
+            addIfValid(spots, x + i, y + i, diagonalSpots);
+            addIfValid(spots, x - i, y + i, diagonalSpots);
+            addIfValid(spots, x - i, y - i, diagonalSpots);
+            addIfValid(spots, x + i, y - i, diagonalSpots);
         }
         return diagonalSpots;
-    }
-
-    private boolean isValidIndex(int index) {
-        return index >= 0 && index <= 7;
     }
 }

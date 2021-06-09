@@ -42,4 +42,14 @@ public class Board {
     public int findYIndexOf(String spot) {
         return columns.indexOf(spot.split("")[1]);
     }
+
+    public static void addIfValid(String[][] spots, int row, int col, List<String> collectedSpots) {
+        if (isValidIndex(row) && isValidIndex(col)) {
+            collectedSpots.add(spots[row][col]);
+        }
+    }
+
+    private static boolean isValidIndex(int index) {
+        return index >= 0 && index <= 7;
+    }
 }

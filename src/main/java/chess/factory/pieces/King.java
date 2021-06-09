@@ -6,6 +6,7 @@ import chess.factory.Piece;
 
 import java.util.*;
 
+import static chess.Board.addIfValid;
 import static chess.Moves.*;
 
 public class King extends Piece {
@@ -40,14 +41,9 @@ public class King extends Piece {
         final int x = board.findXIndexOf(spot);
         final int y = board.findYIndexOf(spot);
         List<String> horizontalSpots = new ArrayList<>();
-        if (isValidIndex(x)) {
-            if (isValidIndex(y - 1)) {
-                horizontalSpots.add(spots[x][y - 1]);
-            }
-            if (isValidIndex(y + 1)) {
-                horizontalSpots.add(spots[x][y + 1]);
-            }
-        }
+
+        addIfValid(spots, x, y - 1, horizontalSpots);
+        addIfValid(spots, x, y + 1, horizontalSpots);
         return horizontalSpots;
     }
 
@@ -56,14 +52,9 @@ public class King extends Piece {
         final int x = board.findXIndexOf(spot);
         final int y = board.findYIndexOf(spot);
         List<String> verticalSpots = new ArrayList<>();
-        if (isValidIndex(y)) {
-            if (isValidIndex(x + 1)) {
-                verticalSpots.add(spots[x + 1][y]);
-            }
-            if (isValidIndex(x - 1)) {
-                verticalSpots.add(spots[x - 1][y]);
-            }
-        }
+
+        addIfValid(spots, x + 1, y, verticalSpots);
+        addIfValid(spots, x - 1, y, verticalSpots);
         return verticalSpots;
     }
 
@@ -73,22 +64,10 @@ public class King extends Piece {
         final int y = board.findYIndexOf(spot);
         List<String> diagonalSpots = new ArrayList<>();
 
-        if (isValidIndex(x + 1) && isValidIndex(y - 1)) {
-            diagonalSpots.add(spots[x + 1][y - 1]);
-        }
-        if (isValidIndex(x - 1) && isValidIndex(y - 1)) {
-            diagonalSpots.add(spots[x - 1][y - 1]);
-        }
-        if (isValidIndex(x + 1) && isValidIndex(y + 1)) {
-            diagonalSpots.add(spots[x + 1][y + 1]);
-        }
-        if (isValidIndex(x - 1) && isValidIndex(y + 1)) {
-            diagonalSpots.add(spots[x - 1][y + 1]);
-        }
+        addIfValid(spots, x + 1, y - 1, diagonalSpots);
+        addIfValid(spots, x - 1, y - 1, diagonalSpots);
+        addIfValid(spots, x + 1, y + 1, diagonalSpots);
+        addIfValid(spots, x - 1, y + 1, diagonalSpots);
         return diagonalSpots;
-    }
-
-    private boolean isValidIndex(int index) {
-        return index >= 0 && index <= 7;
     }
 }

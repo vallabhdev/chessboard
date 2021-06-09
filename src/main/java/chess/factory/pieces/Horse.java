@@ -6,6 +6,8 @@ import chess.factory.Piece;
 
 import java.util.*;
 
+import static chess.Board.addIfValid;
+
 public class Horse extends Piece {
     @Override
     public Set<String> suggestions(String spot, Board board) {
@@ -26,20 +28,10 @@ public class Horse extends Piece {
         final int y = board.findYIndexOf(spot);
         List<String> collectedSpots = new ArrayList<>();
 
-        if (isValidIndex(y - 2) && isValidIndex(x - 1)) {
-            collectedSpots.add(spots[x - 1][y - 2]);
-        }
-        if (isValidIndex(y - 2) && isValidIndex(x + 1)) {
-            collectedSpots.add(spots[x + 1][y - 2]);
-        }
-
-        if (isValidIndex(y + 2) && isValidIndex(x - 1)) {
-            collectedSpots.add(spots[x - 1][y + 2]);
-        }
-        if (isValidIndex(y + 2) && isValidIndex(x + 1)) {
-            collectedSpots.add(spots[x + 1][y + 2]);
-        }
-
+        addIfValid(spots, x - 1, y - 2, collectedSpots);
+        addIfValid(spots, x + 1, y - 2, collectedSpots);
+        addIfValid(spots, x - 1, y + 2, collectedSpots);
+        addIfValid(spots, x + 1, y + 2, collectedSpots);
         return collectedSpots;
     }
 
@@ -49,22 +41,10 @@ public class Horse extends Piece {
         final int y = board.findYIndexOf(spot);
         List<String> collectedSpots = new ArrayList<>();
 
-        if (isValidIndex(x - 2) && isValidIndex(y - 1)) {
-            collectedSpots.add(spots[x - 2][y - 1]);
-        }
-        if (isValidIndex(x - 2) && isValidIndex(y + 1)) {
-            collectedSpots.add(spots[x - 2][y + 1]);
-        }
-        if (isValidIndex(x + 2) && isValidIndex(y - 1)) {
-            collectedSpots.add(spots[x + 2][y - 1]);
-        }
-        if (isValidIndex(x + 2) && isValidIndex(y + 1)) {
-            collectedSpots.add(spots[x + 2][y + 1]);
-        }
+        addIfValid(spots, x - 2, y - 1, collectedSpots);
+        addIfValid(spots, x - 2, y + 1, collectedSpots);
+        addIfValid(spots, x + 2, y - 1, collectedSpots);
+        addIfValid(spots, x + 2, y + 1, collectedSpots);
         return collectedSpots;
-    }
-
-    private boolean isValidIndex(int index) {
-        return index >= 0 && index <= 7;
     }
 }
