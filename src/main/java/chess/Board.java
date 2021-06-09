@@ -6,8 +6,8 @@ import java.util.List;
 public class Board {
     private static Board instance;
     private static final int BOARD_SIZE = 8;
-    public static final List<String> rows = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H");
-    public static final List<String> columns = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8");
+    private static final List<String> rows = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H");
+    private static final List<String> columns = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8");
 
     public String[][] spots;
 

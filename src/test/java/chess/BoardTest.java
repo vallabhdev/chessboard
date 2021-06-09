@@ -20,4 +20,9 @@ public class BoardTest {
         Assert.assertThat(spots[2][2], Is.is("C3"));
         Assert.assertThat(spots[7][3], Is.is("H4"));
     }
+
+    @Test
+    public void mustReturnSingletonObject() {
+        Assert.assertEquals(board, Board.getInstance());
+    }
 }
