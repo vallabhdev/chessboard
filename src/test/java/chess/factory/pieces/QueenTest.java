@@ -52,5 +52,4 @@ public class QueenTest {
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
-
 }
