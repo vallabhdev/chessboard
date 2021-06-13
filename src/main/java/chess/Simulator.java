@@ -13,9 +13,9 @@ public class Simulator {
     }
 
     public Set<String> moveSuggestions(String pieceOnSpot) {
-        String[] splittedQuery = pieceOnSpot.split(" ");
-        String pieceType = splittedQuery[0].toLowerCase();
-        String spot = splittedQuery[1];
+        String[] query = pieceOnSpot.split(" ");
+        String pieceType = query[0].toLowerCase();
+        String spot = query[1];
 
         Piece piece = pieceFactory.getPieceByType(pieceType);
         return piece.getSuggestions(spot);

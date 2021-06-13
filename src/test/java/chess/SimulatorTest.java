@@ -52,4 +52,16 @@ public class SimulatorTest {
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
+
+    @Test
+    public void whenRookIsAtB1() {
+        String expectedSpots = "B2,B3,B4,B5,B6,B7,B8," + //horizontal spots
+                "A1,C1,D1,E1,F1,G1,H1,"; //vertical spots
+        List<String> expectedMoves = Arrays.stream(expectedSpots.split(",")).collect(Collectors.toList());
+
+        Set<String> suggestedMoves = simulator.moveSuggestions("rOOk B1");
+
+        Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
+        Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
+    }
 }
