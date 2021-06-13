@@ -6,11 +6,9 @@ import chess.factory.PieceFactory;
 import java.util.Set;
 
 public class Simulator {
-    private final Board board;
     private final PieceFactory pieceFactory;
 
     public Simulator() {
-        this.board = Board.getInstance();
         this.pieceFactory = new PieceFactory();
     }
 
@@ -20,6 +18,6 @@ public class Simulator {
         String spot = splittedQuery[1];
 
         Piece piece = pieceFactory.getPieceByType(pieceType);
-        return piece.suggestions(spot, board);
+        return piece.getSuggestions(spot);
     }
 }

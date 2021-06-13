@@ -1,19 +1,24 @@
 package chess.factory.pieces;
 
-import chess.Board;
 import chess.Moves;
 import chess.factory.Piece;
+import chess.service.MovementService;
+import chess.service.MovementServiceImpl;
 
 import java.util.*;
 
-import static chess.Board.addIfValid;
-
 public class Horse extends Piece {
+    private MovementService movementService;
+
+    public Horse() {
+        movementService = new MovementServiceImpl();
+    }
+
     @Override
-    public Set<String> suggestions(String spot, Board board) {
+    public Set<String> getSuggestions(String spot) {
         Set<String> suggestions = new HashSet<>();
-        suggestions.addAll(getHorizontalFollowedByVertical(spot, board));
-        suggestions.addAll(getVerticalFollowedByHorizontal(spot, board));
+        suggestions.addAll(getHorizontalFollowedByVertical(spot));
+        suggestions.addAll(getVerticalFollowedByHorizontal(spot));
         return suggestions;
     }
 
@@ -27,29 +32,17 @@ public class Horse extends Piece {
         return 2.5f;
     }
 
-    private List<String> getHorizontalFollowedByVertical(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        final int x = board.findXIndexOf(spot);
-        final int y = board.findYIndexOf(spot);
+    private List<String> getHorizontalFollowedByVertical(String spot) {
         List<String> collectedSpots = new ArrayList<>();
-
-        addIfValid(spots, x - 1, y - 2, collectedSpots);
-        addIfValid(spots, x + 1, y - 2, collectedSpots);
-        addIfValid(spots, x - 1, y + 2, collectedSpots);
-        addIfValid(spots, x + 1, y + 2, collectedSpots);
+        movementService.getExactSpotsFor(spot, 2.0f, Moves.HORIZONTAL)
+                .forEach(eachSpot -> collectedSpots.addAll(movementService.getAllVerticalSpotsFor(eachSpot, 1.0f)));
         return collectedSpots;
     }
 
-    private List<String> getVerticalFollowedByHorizontal(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        final int x = board.findXIndexOf(spot);
-        final int y = board.findYIndexOf(spot);
+    private List<String> getVerticalFollowedByHorizontal(String spot) {
         List<String> collectedSpots = new ArrayList<>();
-
-        addIfValid(spots, x - 2, y - 1, collectedSpots);
-        addIfValid(spots, x - 2, y + 1, collectedSpots);
-        addIfValid(spots, x + 2, y - 1, collectedSpots);
-        addIfValid(spots, x + 2, y + 1, collectedSpots);
+        movementService.getExactSpotsFor(spot, 2.0f, Moves.VERTICAL)
+                .forEach(eachSpot -> collectedSpots.addAll(movementService.getAllHorizontalSpotsFor(eachSpot, 1.0f)));
         return collectedSpots;
     }
 }

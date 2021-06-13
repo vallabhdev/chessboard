@@ -1,19 +1,28 @@
 package chess.factory.pieces;
 
-import chess.Board;
 import chess.Moves;
 import chess.factory.Piece;
+import chess.service.MovementService;
+import chess.service.MovementServiceImpl;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static chess.Board.addIfValid;
 import static chess.Moves.*;
 
 public class King extends Piece {
+    private MovementService movementService;
+
+    public King() {
+        movementService = new MovementServiceImpl();
+    }
+
     @Override
-    public Set<String> suggestions(String spot, Board board) {
+    public Set<String> getSuggestions(String spot) {
         Set<String> suggestions = new HashSet<>();
-        possibleMoves().forEach(move -> suggestions.addAll(getNextPosFor(spot, move, board)));
+        possibleMoves().forEach(move -> suggestions.addAll(getNextPosFor(spot, move)));
         return suggestions;
     }
 
@@ -27,52 +36,17 @@ public class King extends Piece {
         return 1.0f;
     }
 
-    private List<String> getNextPosFor(String spot, Moves move, Board board) {
+    private List<String> getNextPosFor(String spot, Moves move) {
         switch (move) {
             case HORIZONTAL:
-                return getAllHorizontalSpotsFor(spot, board);
+                return movementService.getAllHorizontalSpotsFor(spot, maxSteps());
             case VERTICAL:
-                return getAllVerticalSpotsFor(spot, board);
+                return movementService.getAllVerticalSpotsFor(spot, maxSteps());
             case DIAGONAL:
-                return getAllDiagonalSpotsFor(spot, board);
+                return movementService.getAllDiagonalSpotsFor(spot, maxSteps());
             default:
                 break;
         }
         return null;
-    }
-
-    private List<String> getAllHorizontalSpotsFor(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        final int x = board.findXIndexOf(spot);
-        final int y = board.findYIndexOf(spot);
-        List<String> horizontalSpots = new ArrayList<>();
-
-        addIfValid(spots, x, y - 1, horizontalSpots);
-        addIfValid(spots, x, y + 1, horizontalSpots);
-        return horizontalSpots;
-    }
-
-    private List<String> getAllVerticalSpotsFor(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        final int x = board.findXIndexOf(spot);
-        final int y = board.findYIndexOf(spot);
-        List<String> verticalSpots = new ArrayList<>();
-
-        addIfValid(spots, x + 1, y, verticalSpots);
-        addIfValid(spots, x - 1, y, verticalSpots);
-        return verticalSpots;
-    }
-
-    private List<String> getAllDiagonalSpotsFor(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        final int x = board.findXIndexOf(spot);
-        final int y = board.findYIndexOf(spot);
-        List<String> diagonalSpots = new ArrayList<>();
-
-        addIfValid(spots, x + 1, y - 1, diagonalSpots);
-        addIfValid(spots, x - 1, y - 1, diagonalSpots);
-        addIfValid(spots, x + 1, y + 1, diagonalSpots);
-        addIfValid(spots, x - 1, y + 1, diagonalSpots);
-        return diagonalSpots;
     }
 }

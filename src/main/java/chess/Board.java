@@ -8,8 +8,7 @@ public class Board {
     private static final int BOARD_SIZE = 8;
     private static final List<String> rows = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H");
     private static final List<String> columns = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8");
-
-    public String[][] spots;
+    private static String[][] spots;
 
     private Board() {
         spots = new String[BOARD_SIZE][BOARD_SIZE];
@@ -43,13 +42,13 @@ public class Board {
         return columns.indexOf(spot.split("")[1]);
     }
 
-    public static void addIfValid(String[][] spots, int row, int col, List<String> collectedSpots) {
+    public static void addIfValid(int row, int col, List<String> collectedSpots) {
         if (isValidIndex(row) && isValidIndex(col)) {
             collectedSpots.add(spots[row][col]);
         }
     }
 
-    public static boolean isValidIndex(int index) {
+    private static boolean isValidIndex(int index) {
         return index >= 0 && index <= 7;
     }
 }

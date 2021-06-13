@@ -1,19 +1,28 @@
 package chess.factory.pieces;
 
-import chess.Board;
 import chess.Moves;
 import chess.factory.Piece;
+import chess.service.MovementService;
+import chess.service.MovementServiceImpl;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static chess.Board.addIfValid;
 import static chess.Moves.*;
 
 public class Queen extends Piece {
+    private MovementService movementService;
+
+    public Queen() {
+        movementService = new MovementServiceImpl();
+    }
+
     @Override
-    public Set<String> suggestions(String spot, Board board) {
+    public Set<String> getSuggestions(String spot) {
         Set<String> suggestions = new HashSet<>();
-        possibleMoves().forEach(move -> suggestions.addAll(getNextPosFor(spot, move, board)));
+        possibleMoves().forEach(move -> suggestions.addAll(getNextPosFor(spot, move)));
         suggestions.remove(spot);
         return suggestions;
     }
@@ -28,49 +37,17 @@ public class Queen extends Piece {
         return 7.0f;
     }
 
-    private List<String> getNextPosFor(String spot, Moves move, Board board) {
+    private List<String> getNextPosFor(String spot, Moves move) {
         switch (move) {
             case HORIZONTAL:
-                return getAllHorizontalSpotsFor(spot, board);
+                return movementService.getAllHorizontalSpotsFor(spot, maxSteps());
             case VERTICAL:
-                return getAllVerticalSpotsFor(spot, board);
+                return movementService.getAllVerticalSpotsFor(spot, maxSteps());
             case DIAGONAL:
-                return getAllDiagonalSpotsFor(spot, board);
+                return movementService.getAllDiagonalSpotsFor(spot, maxSteps());
             default:
                 break;
         }
         return null;
-    }
-
-    private List<String> getAllHorizontalSpotsFor(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        int currentRow = board.findXIndexOf(spot);
-        // queen can walk any steps horizontally in current row, so adding all the current row spots.
-        return Arrays.asList(spots[currentRow]);
-    }
-
-    private List<String> getAllVerticalSpotsFor(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        int currentCol = board.findYIndexOf(spot);
-        List<String> verticalSpots = new ArrayList<>();
-        // queen can walk any steps vertically from current row's spot, so adding all the current column spots.
-        for (int x = 0; x < 8; x++) {
-            verticalSpots.add(spots[x][currentCol]);
-        }
-        return verticalSpots;
-    }
-
-    private List<String> getAllDiagonalSpotsFor(String spot, Board board) {
-        String[][] spots = board.getSpots();
-        List<String> diagonalSpots = new ArrayList<>();
-        final int x = board.findXIndexOf(spot);
-        final int y = board.findYIndexOf(spot);
-        for (int i = 1; i < 8; i++) {
-            addIfValid(spots, x + i, y + i, diagonalSpots);
-            addIfValid(spots, x - i, y + i, diagonalSpots);
-            addIfValid(spots, x - i, y - i, diagonalSpots);
-            addIfValid(spots, x + i, y - i, diagonalSpots);
-        }
-        return diagonalSpots;
     }
 }

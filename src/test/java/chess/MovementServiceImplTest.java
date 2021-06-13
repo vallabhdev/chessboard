@@ -2,6 +2,7 @@ package chess;
 
 import chess.factory.pieces.King;
 import chess.factory.pieces.Queen;
+import chess.service.MovementServiceImpl;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -10,14 +11,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MoveServiceTest {
-    private static MoveService moveService;
+public class MovementServiceImplTest {
+    private static MovementServiceImpl movementServiceImpl;
     private static King king;
     private static Queen queen;
 
     @BeforeClass
     public static void setUp() {
-        moveService = new MoveService();
+        movementServiceImpl = new MovementServiceImpl();
         king = new King();
         queen = new Queen();
     }
@@ -27,7 +28,7 @@ public class MoveServiceTest {
         List<String> expectedMoves = Arrays.stream("D4,D6".split(","))
                 .collect(Collectors.toList());
 
-        List<String> suggestedMoves = moveService
+        List<String> suggestedMoves = movementServiceImpl
                 .getAllHorizontalSpotsFor("D5", king.maxSteps());
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
@@ -40,7 +41,7 @@ public class MoveServiceTest {
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(","))
                 .collect(Collectors.toList());
 
-        List<String> suggestedMoves = moveService.getAllHorizontalSpotsFor("D5", queen.maxSteps());
+        List<String> suggestedMoves = movementServiceImpl.getAllHorizontalSpotsFor("D5", queen.maxSteps());
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
@@ -51,7 +52,7 @@ public class MoveServiceTest {
         List<String> expectedMoves = Arrays.stream("C5,E5".split(","))
                 .collect(Collectors.toList());
 
-        List<String> suggestedMoves = moveService
+        List<String> suggestedMoves = movementServiceImpl
                 .getAllVerticalSpotsFor("D5", king.maxSteps());
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
@@ -64,7 +65,7 @@ public class MoveServiceTest {
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(","))
                 .collect(Collectors.toList());
 
-        List<String> suggestedMoves = moveService.getAllVerticalSpotsFor("D5", queen.maxSteps());
+        List<String> suggestedMoves = movementServiceImpl.getAllVerticalSpotsFor("D5", queen.maxSteps());
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
@@ -75,7 +76,7 @@ public class MoveServiceTest {
         List<String> expectedMoves = Arrays.stream("A2,A4,C2,C4".split(","))
                 .collect(Collectors.toList());
 
-        List<String> suggestedMoves = moveService.getAllDiagonalSpotsFor("B3", king.maxSteps());
+        List<String> suggestedMoves = movementServiceImpl.getAllDiagonalSpotsFor("B3", king.maxSteps());
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
@@ -86,7 +87,7 @@ public class MoveServiceTest {
         List<String> expectedMoves = Arrays.stream("A2,B3,C4,E6,F7,G8,A8,B7,C6,E4,F3,G2,H1".split(","))
                 .collect(Collectors.toList());
 
-        List<String> suggestedMoves = moveService.getAllDiagonalSpotsFor("D5", queen.maxSteps());
+        List<String> suggestedMoves = movementServiceImpl.getAllDiagonalSpotsFor("D5", queen.maxSteps());
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));

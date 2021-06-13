@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Piece {
-    public abstract Set<String> suggestions(String spot, Board board);
+    public abstract Set<String> getSuggestions(String spot);
 
     public abstract List<Moves> possibleMoves();
 

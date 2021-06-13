@@ -1,6 +1,5 @@
 package chess.factory.pieces;
 
-import chess.Board;
 import chess.Moves;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,12 +12,10 @@ import java.util.stream.Collectors;
 
 public class QueenTest {
     private Queen queen;
-    private Board board;
 
     @Before
     public void setUp() {
         queen = new Queen();
-        board = Board.getInstance();
     }
 
     @Test
@@ -34,7 +31,7 @@ public class QueenTest {
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(","))
                 .collect(Collectors.toList());
 
-        Set<String> suggestedMoves = queen.suggestions("D5", board);
+        Set<String> suggestedMoves = queen.getSuggestions("D5");
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
@@ -48,7 +45,7 @@ public class QueenTest {
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(","))
                 .collect(Collectors.toList());
 
-        Set<String> suggestedMoves = queen.suggestions("H8", board);
+        Set<String> suggestedMoves = queen.getSuggestions("H8");
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
         Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));

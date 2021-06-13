@@ -1,6 +1,5 @@
 package chess.factory.pieces;
 
-import chess.Board;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,12 +12,10 @@ import java.util.stream.Collectors;
 
 public class HorseTest {
     private Horse horse;
-    private Board board;
 
     @Before
     public void setUp() {
         horse = new Horse();
-        board = Board.getInstance();
     }
 
     @Test
@@ -32,7 +29,7 @@ public class HorseTest {
                 "A2,A4,E2,E4"; //move vertically first then horizontally picked spots
         List<String> expectedMoves = Arrays.stream(expectedSpots.split(",")).collect(Collectors.toList());
 
-        Set<String> suggestedMoves = horse.suggestions("C3", board);
+        Set<String> suggestedMoves = horse.getSuggestions("C3");
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
     }
@@ -42,7 +39,7 @@ public class HorseTest {
         List<String> expectedMoves = Arrays.stream("C1,C3,B4".split(","))
                 .collect(Collectors.toList());
 
-        Set<String> suggestedMoves = horse.suggestions("A2", board);
+        Set<String> suggestedMoves = horse.getSuggestions("A2");
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
     }
