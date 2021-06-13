@@ -23,6 +23,11 @@ public class Queen extends Piece {
         return Arrays.asList(VERTICAL, HORIZONTAL, DIAGONAL);
     }
 
+    @Override
+    public Float maxSteps() {
+        return 7.0f;
+    }
+
     private List<String> getNextPosFor(String spot, Moves move, Board board) {
         switch (move) {
             case HORIZONTAL:
@@ -58,10 +63,9 @@ public class Queen extends Piece {
     private List<String> getAllDiagonalSpotsFor(String spot, Board board) {
         String[][] spots = board.getSpots();
         List<String> diagonalSpots = new ArrayList<>();
+        final int x = board.findXIndexOf(spot);
+        final int y = board.findYIndexOf(spot);
         for (int i = 1; i < 8; i++) {
-            final int x = board.findXIndexOf(spot);
-            final int y = board.findYIndexOf(spot);
-
             addIfValid(spots, x + i, y + i, diagonalSpots);
             addIfValid(spots, x - i, y + i, diagonalSpots);
             addIfValid(spots, x - i, y - i, diagonalSpots);

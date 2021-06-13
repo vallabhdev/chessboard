@@ -49,7 +49,7 @@ public class Board {
         }
     }
 
-    private static boolean isValidIndex(int index) {
+    public static boolean isValidIndex(int index) {
         return index >= 0 && index <= 7;
     }
 }

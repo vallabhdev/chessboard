@@ -22,6 +22,11 @@ public class King extends Piece {
         return Arrays.asList(VERTICAL, HORIZONTAL, DIAGONAL);
     }
 
+    @Override
+    public Float maxSteps() {
+        return 1.0f;
+    }
+
     private List<String> getNextPosFor(String spot, Moves move, Board board) {
         switch (move) {
             case HORIZONTAL:

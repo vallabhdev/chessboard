@@ -22,6 +22,11 @@ public class Horse extends Piece {
         return Collections.emptyList();
     }
 
+    @Override
+    public Float maxSteps() {
+        return 2.5f;
+    }
+
     private List<String> getHorizontalFollowedByVertical(String spot, Board board) {
         String[][] spots = board.getSpots();
         final int x = board.findXIndexOf(spot);
