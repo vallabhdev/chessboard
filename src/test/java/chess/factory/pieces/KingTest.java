@@ -1,6 +1,7 @@
 package chess.factory.pieces;
 
 import chess.Moves;
+import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class KingTest {
     @Test
     public void checkMovementRulesForKing() {
         Assert.assertEquals(king.possibleMoves(), Arrays.asList(Moves.values()));
+        Assert.assertThat(king.maxSteps(), Is.is(1.0f));
     }
 
     @Test

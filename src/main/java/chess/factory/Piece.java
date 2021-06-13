@@ -1,6 +1,5 @@
 package chess.factory;
 
-import chess.Board;
 import chess.Moves;
 
 import java.util.List;
