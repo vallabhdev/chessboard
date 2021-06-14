@@ -44,7 +44,7 @@ public class Horse extends Piece {
     private List<String> getByMultiDirectionalMove(String spot, Float x, Float y) {
         List<String> collectedSpots = new ArrayList<>();
         List<Moves> moves = possibleMoves();
-        moves.forEach((m) -> {
+        moves.forEach(m -> {
             movementService.getExactSpotsFor(spot, x, moves.get(0))
                     .forEach(eachSpot -> collectedSpots.addAll(movementService.getExactSpotsFor(eachSpot, y, moves.get(1))));
             movementService.getExactSpotsFor(spot, x, moves.get(1))
