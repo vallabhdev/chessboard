@@ -7,6 +7,9 @@ import chess.service.MovementServiceImpl;
 
 import java.util.*;
 
+import static chess.Moves.HORIZONTAL;
+import static chess.Moves.VERTICAL;
+
 public class Horse extends Piece {
     private MovementService movementService;
 
@@ -16,15 +19,21 @@ public class Horse extends Piece {
 
     @Override
     public Set<String> getSuggestions(String spot) {
-        Set<String> suggestions = new HashSet<>();
-        suggestions.addAll(getHorizontalFollowedByVertical(spot));
-        suggestions.addAll(getVerticalFollowedByHorizontal(spot));
+        Set<String> suggestions;
+        float step = maxSteps();
+        int x = (int) (step);
+        float y = step % 1 < 1 && step % 1 > 0 ? 1f : 0f;
+        if (y != 0f) {
+            suggestions = new HashSet<>(getByMultiDirectionalMove(spot, (float) x, y));
+        } else {
+            throw new IllegalStateException("Horse can not move only in one direction");
+        }
         return suggestions;
     }
 
     @Override
     public List<Moves> possibleMoves() {
-        return Collections.emptyList();
+        return Arrays.asList(VERTICAL, HORIZONTAL);
     }
 
     @Override
@@ -32,17 +41,15 @@ public class Horse extends Piece {
         return 2.5f;
     }
 
-    private List<String> getHorizontalFollowedByVertical(String spot) {
+    private List<String> getByMultiDirectionalMove(String spot, Float x, Float y) {
         List<String> collectedSpots = new ArrayList<>();
-        movementService.getExactSpotsFor(spot, 2.0f, Moves.HORIZONTAL)
-                .forEach(eachSpot -> collectedSpots.addAll(movementService.getAllVerticalSpotsFor(eachSpot, 1.0f)));
-        return collectedSpots;
-    }
-
-    private List<String> getVerticalFollowedByHorizontal(String spot) {
-        List<String> collectedSpots = new ArrayList<>();
-        movementService.getExactSpotsFor(spot, 2.0f, Moves.VERTICAL)
-                .forEach(eachSpot -> collectedSpots.addAll(movementService.getAllHorizontalSpotsFor(eachSpot, 1.0f)));
+        List<Moves> moves = possibleMoves();
+        moves.forEach((m) -> {
+            movementService.getExactSpotsFor(spot, x, moves.get(0))
+                    .forEach(eachSpot -> collectedSpots.addAll(movementService.getExactSpotsFor(eachSpot, y, moves.get(1))));
+            movementService.getExactSpotsFor(spot, x, moves.get(1))
+                    .forEach(eachSpot -> collectedSpots.addAll(movementService.getExactSpotsFor(eachSpot, y, moves.get(0))));
+        });
         return collectedSpots;
     }
 }

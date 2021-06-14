@@ -6,10 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static chess.Moves.HORIZONTAL;
+import static chess.Moves.VERTICAL;
 
 public class HorseTest {
     private Horse horse;
@@ -20,8 +22,8 @@ public class HorseTest {
     }
 
     @Test
-    public void checkMovementRulesForKing() {
-        Assert.assertEquals(horse.possibleMoves(), Collections.emptyList());
+    public void checkMovementRulesForHorse() {
+        Assert.assertEquals(horse.possibleMoves(), Arrays.asList(VERTICAL, HORIZONTAL));
         Assert.assertThat(horse.maxSteps(), Is.is(2.5f));
     }
 
@@ -34,6 +36,7 @@ public class HorseTest {
         Set<String> suggestedMoves = horse.getSuggestions("C3");
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
+        Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
 
     @Test
@@ -44,5 +47,6 @@ public class HorseTest {
         Set<String> suggestedMoves = horse.getSuggestions("A2");
 
         Assert.assertTrue(expectedMoves.containsAll(suggestedMoves));
+        Assert.assertTrue(suggestedMoves.containsAll(expectedMoves));
     }
 }
